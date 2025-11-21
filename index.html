@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEON WAVE | MUSIC PLAYER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-music"></i>
+        </div>
+        <h1>NEONWAVE</h1>
+      </div>
+      <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-sun"></i>
+      </button>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Player -->
+      <div class="player-card">
+        <div class="player-content">
+          <!-- Album Cover -->
+          <div class="album-cover-wrapper">
+            <img id="album-cover" class="album-cover"
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnMSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwZjNmZjtzdG9wLW9wYWNpdHk6MSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM4MzM4ZWM7c3RvcC1vcGFjaXR5OjEiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9InVybCgjZzEpIi8+PGNpcmNsZSBjeD0iMTQwIiBjeT0iMTQwIiByPSI2MCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMyIvPjxjaXJjbGUgY3g9IjE0MCIgY3k9IjE0MCIgcj0iNDAiIGZpbGw9IndoaXRlIi8+PC9zdmc+"
+              alt="Album Cover">
+            <div class="playing-indicator hidden" id="playing-indicator">
+              <i class="fas fa-play"></i>
+            </div>
+          </div>
+
+          <!-- Song Info -->
+          <div class="song-info">
+            <p class="now-playing">NOW PLAYING</p>
+            <h2 class="song-title" id="song-title">No songs loaded</h2>
+            <p class="artist-name" id="artist-name">Add songs to get started</p>
+
+            <!-- Visualizer -->
+            <div class="visualizer" id="visualizer"></div>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div class="time-display">
+            <span id="current-time">0:00</span>
+            <span id="duration">0:00</span>
+          </div>
+          <div class="progress-wrapper">
+            <canvas class="progress-trail" id="progress-trail"></canvas>
+            <input type="range" class="progress-slider" id="progress-slider" value="0" min="0" max="100" step="0.1">
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <button class="control-btn" id="shuffle-btn">
+            <i class="fas fa-random"></i>
+          </button>
+          <button class="control-btn" id="prev-btn">
+            <i class="fas fa-step-backward"></i>
+          </button>
+          <button class="control-btn play-pause-btn" id="play-pause-btn">
+            <i class="fas fa-play"></i>
+          </button>
+          <button class="control-btn" id="next-btn">
+            <i class="fas fa-step-forward"></i>
+          </button>
+          <button class="control-btn" id="repeat-btn">
+            <i class="fas fa-redo"></i>
+          </button>
+        </div>
+
+        <!-- Volume Control -->
+        <div class="volume-container">
+          <div class="volume-icon" id="volume-icon">
+            <i class="fas fa-volume-up"></i>
+          </div>
+          <div class="volume-wrapper">
+            <canvas class="volume-trail" id="volume-trail"></canvas>
+            <input type="range" class="volume-slider" id="volume-slider" value="100" min="0" max="100" step="1">
+          </div>
+          <span class="volume-percentage" id="volume-percentage">100%</span>
+        </div>
+      </div>
+
+      <!-- Library -->
+      <div class="library-card">
+        <div class="library-header">
+          <h3>LIBRARY</h3>
+          <span class="song-count" id="song-count">0 songs</span>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="upload-section">
+          <div class="upload-buttons">
+            <button class="upload-btn" id="upload-btn">
+              <i class="fas fa-file-audio"></i>
+              Add Files
+            </button>
+            <button class="folder-btn" id="folder-btn">
+              <i class="fas fa-folder-open"></i>
+              Add Folder
+            </button>
+          </div>
+          <div class="drop-zone" id="drop-zone">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p class="main">Drop audio files here</p>
+            <p>or click to browse</p>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" class="search-input" id="search-input" placeholder="Search songs..." autocomplete="off">
+        </div>
+        <div class="song-list" id="song-list">
+          <div class="empty-state">
+            <i class="fas fa-music"></i>
+            <p>No songs in library</p>
+            <p style="font-size: 14px;">Add audio files to get started</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keyboard Shortcuts -->
+    <div class="shortcuts">
+      <div class="shortcut">
+        <kbd>Space</kbd>
+        <span>Play/Pause</span>
+      </div>
+      <div class="shortcut">
+        <kbd>← →</kbd>
+        <span>Seek</span>
+      </div>
+      <div class="shortcut">
+        <kbd>↑ ↓</kbd>
+        <span>Volume</span>
+      </div>
+      <div class="shortcut">
+        <kbd>S</kbd>
+        <span>Shuffle</span>
+      </div>
+      <div class="shortcut">
+        <kbd>R</kbd>
+        <span>Repeat</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden file inputs -->
+  <input type="file" id="file-input" accept="audio/*" multiple style="display: none;">
+  <input type="file" id="folder-input" webkitdirectory directory multiple style="display: none;">
+</body>
+  <script src="app.js"> </script>
+</html>
